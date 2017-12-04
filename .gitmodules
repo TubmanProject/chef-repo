@@ -1,0 +1,6 @@
+[submodule "jupyterhub"]
+	path = jupyterhub
+	url = https://github.com/TubmanProject/jupyterhub.git
+[submodule "api"]
+	path = api
+	url = https://github.com/TubmanProject/data_scraper.git
