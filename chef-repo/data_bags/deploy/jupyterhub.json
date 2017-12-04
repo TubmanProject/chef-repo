@@ -1,0 +1,138 @@
+{
+ "id" : "jupyterhub",
+ "development" : [
+    {
+      "subdomain" : "jupyterhub",
+      "hostname" : "tubmanproject-jupyterhub-development",
+      "domain" : "tubmanproject.dev",
+      "port" : 5010,
+      "nginx_config_template" : "jupyterhub-nginx.conf.erb",
+	  "ssl" : false,
+	  "npm" : {
+	  	"global": ["configurable-http-proxy"],
+	  	"local": []
+	  },
+	  "apt" : [],
+	  "commands" : [
+	  	"/var/tubmanproject.dev/jupyterhub/.venv/bin/jupyter contrib nbextension install --sys-prefix",
+	  	"/var/tubmanproject.dev/jupyterhub/.venv/bin/jupyter nbextension enable --py widgetsnbextension --sys-prefix"
+	  ],
+      "git" : {
+        "repository" : "git@github.com:tubmanproject/jupyterhub.git",
+        "branch" : "master"
+      },
+      "config" : {
+      	"jupyterhub" : {
+      		"docker": {
+      			"build": false,
+      			"image": "jupyter/tensorflow-notebook",
+      			"tag": "033056e6d164",
+      			"run": []
+      		}
+      	}
+      },
+      "programs" : {
+      	"jupyterhub" : {
+      		"command" : "/var/tubmanproject.dev/jupyterhub/.venv/bin/jupyterhub -f /etc/jupyterhub/jupyterhub.tubmanproject.dev_config.py",
+      		"directory" : "/var/tubmanproject.dev/jupyterhub",
+      		"redirect_stderr" : true,
+      		"stdout_logfile" : "/var/log/supervisor/jupyterhub.log",
+      		"stderr_logfile" : "/var/log/supervisor/jupyterhub.error.log",
+      		"autostart": true,
+      		"autorestart": true,
+      		"stopsignal": "QUIT"
+      	}
+      }
+    }
+  ],
+  "staging" : [
+  	{
+      "subdomain" : "tubmanproject-jupyterhub-staging",
+      "hostname" : "tubmanproject-jupyterhub-staging",
+      "domain" : "mintyross.com",
+      "port" : 5010,
+      "nginx_config_template" : "jupyterhub-nginx.conf.erb",
+	  "ssl" : true,
+	  "npm" : {
+	  	"global": ["configurable-http-proxy"],
+	  	"local": []
+	  },
+	  "apt" : [],
+	  "commands" : [
+	  	"/var/mintyross.com/tubmanproject-jupyterhub-staging/.venv/bin/jupyter contrib nbextension install --sys-prefix",
+	  	"/var/mintyross.com/tubmanproject-jupyterhub-staging/.venv/bin/jupyter nbextension enable --py widgetsnbextension --sys-prefix"
+	  ],
+      "git" : {
+        "repository" : "git@github.com:tubmanproject/jupyterhub.git",
+        "branch" : "master"
+      },
+      "config" : {
+      	"jupyterhub" : {
+      		"docker": {
+      			"build": false,
+      			"image": "jupyter/tensorflow-notebook",
+      			"tag": "033056e6d164",
+      			"run": []
+      		}
+      	}
+      },
+      "programs" : {
+      	"jupyterhub" : {
+      		"command" : "/var/mintyross.com/tubmanproject-jupyterhub-staging/.venv/bin/jupyterhub -f /etc/jupyterhub/tubmanproject-jupyterhub-staging.mintyross.com_config.py",
+      		"directory" : "/var/mintyross.com/tubmanproject-jupyterhub-staging",
+      		"redirect_stderr" : true,
+      		"stdout_logfile" : "/var/log/supervisor/jupyterhub.log",
+      		"stderr_logfile" : "/var/log/supervisor/jupyterhub.error.log",
+      		"autostart": true,
+      		"autorestart": true,
+      		"stopsignal": "QUIT"
+      	}
+      }
+    }
+  ],
+  "production" : [
+  	{
+      "subdomain" : "tubmanproject-jupyterhub",
+      "hostname" : "tubmanproject-jupyterhub-production",
+      "domain" : "mintyross.com",
+      "port" : 5010,
+      "nginx_config_template" : "jupyterhub-nginx.conf.erb",
+	  "ssl" : true,
+	  "npm" : {
+	  	"global": ["configurable-http-proxy"],
+	  	"local": []
+	  },
+	  "apt" : [],
+	  "commands" : [
+	  	"/var/mintyross.com/tubmanproject-jupyterhub/.venv/bin/jupyter contrib nbextension install --sys-prefix",
+	  	"/var/mintyross.com/tubmanproject-jupyterhub/.venv/bin/jupyter nbextension enable --py widgetsnbextension --sys-prefix"
+	  ],
+      "git" : {
+        "repository" : "git@github.com:tubmanproject/jupyterhub.git",
+        "branch" : "master"
+      },
+      "config" : {
+      	"jupyterhub" : {
+      		"docker": {
+      			"build": false,
+      			"image": "jupyter/tensorflow-notebook",
+      			"tag": "033056e6d164",
+      			"run": []
+      		}
+      	}
+      },
+      "programs" : {
+      	"jupyterhub" : {
+      		"command" : "/var/mintyross.com/tubmanproject-jupyterhub/.venv/bin/jupyterhub -f /etc/jupyterhub/tubmanproject-jupyterhub.mintyross.com_config.py",
+      		"directory" : "/var/mintyross.com/tubmanproject-jupyterhub",
+      		"redirect_stderr" : true,
+      		"stdout_logfile" : "/var/log/supervisor/jupyterhub.log",
+      		"stderr_logfile" : "/var/log/supervisor/jupyterhub.error.log",
+      		"autostart": true,
+      		"autorestart": true,
+      		"stopsignal": "QUIT"
+      	}
+      }
+    }
+  ]
+}

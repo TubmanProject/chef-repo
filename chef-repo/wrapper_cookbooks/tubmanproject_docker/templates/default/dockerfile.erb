@@ -1,0 +1,6 @@
+FROM <%= @from %>
+<% if @run.is_a?(Array) %>
+<% @run.each do |value| %>
+<%= "RUN #{value}"%>
+<% end %>
+<% end %>

@@ -1,0 +1,3 @@
+#!/bin/bash
+
+fswatch -v -o <%= @project_path %> | xargs -n1 -I{} echo 'restart' | nc localhost <%= @port %> > /dev/null &

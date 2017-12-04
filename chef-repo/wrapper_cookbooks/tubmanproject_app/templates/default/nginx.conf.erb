@@ -1,0 +1,69 @@
+server {
+  <% if @default == true %>
+  listen   <%= node['nginx']['port'] -%> default_server;
+  listen [::]:<%= node['nginx']['port'] -%> default_server ipv6only=on;
+  listen 443 ssl;
+  listen [::]:443 ssl;
+  <% else %>
+  listen   <%= node['nginx']['port'] -%>;
+  listen [::]:<%= node['nginx']['port'] -%>;
+  listen 443 ssl;
+  listen [::]:443 ssl;
+  <% end %>
+  
+  <% if @subdomain == "www" -%>
+  server_name <%= @subdomain %>.<%= @domain %> <%= @domain %>;
+  <% else %>
+  server_name <%= @subdomain %>.<%= @domain %>;
+  <% end -%>
+  
+  <% if @force_ssl -%>
+  if ($scheme = http) {
+      return 301 https://$server_name$request_uri;
+  }
+  <% end -%>
+  
+  ssl_certificate <%= @ssl_directory%>/<%= @subdomain %>.<%= @domain %>/ssl.pem;
+  ssl_certificate_key <%= @ssl_directory%>/<%= @subdomain %>.<%= @domain %>/ssl.key;
+  
+  ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+  ssl_prefer_server_ciphers on;
+  ssl_dhparam <%= @ssl_directory%>/<%= @subdomain %>.<%= @domain %>/dhparam.pem;
+  ssl_ciphers 'ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-DSS-AES128-GCM-SHA256:kEDH+AESGCM:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA:ECDHE-ECDSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-DSS-AES128-SHA256:DHE-RSA-AES256-SHA256:DHE-DSS-AES256-SHA:DHE-RSA-AES256-SHA:AES128-GCM-SHA256:AES256-GCM-SHA384:AES128-SHA256:AES256-SHA256:AES128-SHA:AES256-SHA:AES:CAMELLIA:DES-CBC3-SHA:!aNULL:!eNULL:!EXPORT:!DES:!RC4:!MD5:!PSK:!aECDH:!EDH-DSS-DES-CBC3-SHA:!EDH-RSA-DES-CBC3-SHA:!KRB5-DES-CBC3-SHA';
+  ssl_session_timeout 1d;
+  ssl_session_cache shared:SSL:50m;
+  
+  # self-signed certificate can't use SSL stapling
+  #ssl_stapling on;
+  #ssl_stapling_verify on;
+  
+  add_header Strict-Transport-Security max-age=15768000;
+
+  access_log  <%= node['nginx']['log_dir'] %>/<%= @subdomain %>.<%= @domain %>.access.log;
+  error_log   <%= node['nginx']['log_dir'] %>/<%= @subdomain %>.<%= @domain %>.error.log;
+
+  location / {
+    include uwsgi_params;
+    uwsgi_pass unix:<%= @uwsgi_socket %>;
+  }
+  
+  location /assets/ {
+    root /var/uploads/<%= @subdomain %>.<%= @domain %>;
+    sendfile           on;
+    sendfile_max_chunk 1m;
+    tcp_nopush on;
+    tcp_nodelay       on;
+    keepalive_timeout 65;  
+  }
+  
+  location /static/ {
+    root /var/<%= @domain %>/<%= @subdomain %>/app/static;
+    sendfile           on;
+    sendfile_max_chunk 1m;
+    tcp_nopush on;
+    tcp_nodelay       on;
+    keepalive_timeout 65;  
+  }
+  
+  sendfile <%= @sendfile %>;
+}

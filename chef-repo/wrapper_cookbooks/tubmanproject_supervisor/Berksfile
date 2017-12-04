@@ -1,0 +1,6 @@
+source 'https://supermarket.chef.io'
+
+metadata
+
+cookbook 'users',             '~> 5.2.1'
+cookbook 'poise-python',      '~> 1.6.0'

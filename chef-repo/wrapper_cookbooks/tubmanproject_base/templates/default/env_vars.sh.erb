@@ -1,0 +1,5 @@
+<% if @env_vars.is_a?(Hash) %>
+<% @env_vars.each_pair do |key, value| %>
+<%= "export #{key}=#{value}"%>
+<% end %>
+<% end %>

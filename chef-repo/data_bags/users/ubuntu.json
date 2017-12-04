@@ -1,0 +1,6 @@
+{
+    "id": "ubuntu",
+    "ssh_keys": [],
+    "groups": [],
+    "shell": "/bin/bash"
+}

@@ -1,0 +1,10 @@
+source 'https://supermarket.chef.io'
+
+metadata
+
+cookbook 'apt',               '~> 6.1.4'
+cookbook 'git',               '~> 8.0.0'
+cookbook 'vim',               '~> 2.0.2'
+cookbook 'sudo',              '~> 3.5.3'
+cookbook 'users',             '~> 5.2.1'
+cookbook 'openssl',           '~> 7.1.0'

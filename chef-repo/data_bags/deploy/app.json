@@ -1,0 +1,156 @@
+{
+ "id" : "app",
+ "development" : [
+    {
+      "subdomain" : "api",
+      "hostname" : "tubmanproject-api-development",
+      "domain" : "tubmanproject.dev",
+      "port" : 5001,
+      "nginx_config_template": "nginx.conf.erb",
+	  "ssl": false,
+	  "jupyter": false,
+	  "npm" : {
+	  	"global": [],
+	  	"local": []
+	  },
+	  "apt" : [],
+	  "commands" : [],
+	  "cron_jobs" : [],
+      "git" : {
+        "repository" : "git@github.com:tubmanproject/data_scraper.git",
+        "branch" : "master"
+      },
+      "config" : {
+      	"uwsgi" : {
+      		"wsgi-file" : "/var/tubmanproject.dev/api/wsgi.py",
+      		"protocol" : "uwsgi",
+      		"module" : "wsgi",
+      		"callable" : "app",
+      		"master" : true,
+      		"processes" : 1,
+      		"threads" : 8,
+      		"enable-threads" : true,
+      		"die-on-term" : true,
+      		"chmod-socket" : 666,
+      		"vacuum" : true,
+      		"disable-logging" : true,
+      		"max-worker-lifetime" : 30	
+      	}
+      },
+      "programs" : {
+      	"uwsgi" : {
+      		"command" : "/var/tubmanproject.dev/api/.venv/bin/uwsgi --ini /var/tubmanproject.dev/api/.uwsgi/app.ini",
+      		"directory" : "/var/tubmanproject.dev/api",
+      		"redirect_stderr" : true,
+      		"stdout_logfile" : "/var/log/supervisor/uwsgi.log",
+      		"stderr_logfile" : "/var/log/supervisor/uwsgi.error.log",
+      		"autostart": true,
+      		"autorestart": true,
+      		"stopsignal": "QUIT"
+      	}
+      }
+    }
+  ],
+  "staging" : [
+    {
+      "subdomain" : "tubmanproject-api-staging",
+      "hostname" : "tubmanproject-api-staging",
+      "domain" : "mintyross.com",
+      "port" : 5001,
+      "nginx_config_template": "nginx.conf.erb",
+	  "ssl": true,
+	  "jupyter": true,
+	  "npm" : {
+	  	"global": [],
+	  	"local": []
+	  },
+	  "apt" : [],
+	  "commands" : [],
+	  "cron_jobs" : [],
+      "git" : {
+        "repository" : "git@github.com:tubmanproject/data_scraper.git",
+        "branch" : "master"
+      },
+      "config" : {
+      	"uwsgi" : {
+      		"wsgi-file" : "/var/mintyross.com/tubmanproject-api-staging/wsgi.py",
+      		"protocol" : "uwsgi",
+      		"module" : "wsgi",
+      		"callable" : "app",
+      		"master" : true,
+      		"processes" : 1,
+      		"threads" : 8,
+      		"enable-threads" : true,
+      		"die-on-term" : true,
+      		"chmod-socket" : 666,
+      		"vacuum" : true,
+      		"disable-logging" : true,
+      		"max-worker-lifetime" : 30	
+      	}
+      },
+      "programs" : {
+      	"uwsgi" : {
+      		"command" : "/var/mintyross.com/tubmanproject-api-staging/.venv/bin/uwsgi --ini /var/mintyross.com/tubmanproject-api-staging/.uwsgi/app.ini",
+      		"directory" : "/var/mintyross.com/tubmanproject-api-staging",
+      		"redirect_stderr" : true,
+      		"stdout_logfile" : "/var/log/supervisor/uwsgi.log",
+      		"stderr_logfile" : "/var/log/supervisor/uwsgi.error.log",
+      		"autostart": true,
+      		"autorestart": true,
+      		"stopsignal": "QUIT"
+      	}
+      }
+    }
+  ],
+  "production" : [
+    {
+      "subdomain" : "tubmanproject-api",
+      "hostname" : "tubmanproject-api-production",
+      "domain" : "mintyross.com",
+      "port" : 5001,
+      "nginx_config_template": "nginx.conf.erb",
+	  "ssl": true,
+	  "jupyter": true,
+	  "npm" : {
+	  	"global": [],
+	  	"local": []
+	  },
+	  "apt" : [],
+	  "commands" : [],
+	  "cron_jobs" : [],
+      "git" : {
+        "repository" : "git@github.com:tubmanproject/data_scraper.git",
+        "branch" : "master"
+      },
+      "config" : {
+      	"uwsgi" : {
+      		"wsgi-file" : "/var/mintyross.com/tubmanproject-api/wsgi.py",
+      		"protocol" : "uwsgi",
+      		"module" : "wsgi",
+      		"callable" : "app",
+      		"master" : true,
+      		"processes" : 1,
+      		"threads" : 8,
+      		"enable-threads" : true,
+      		"die-on-term" : true,
+      		"chmod-socket" : 666,
+      		"vacuum" : true,
+      		"disable-logging" : true,
+      		"max-worker-lifetime" : 30	
+      	}
+      },
+      "programs" : {
+      	"uwsgi" : {
+      		"command" : "/var/mintyross.com/tubmanproject-api/.venv/bin/uwsgi --ini /var/mintyross.com/tubmanproject-api/.uwsgi/app.ini",
+      		"directory" : "/var/mintyross.com/tubmanproject-api",
+      		"redirect_stderr" : true,
+      		"stdout_logfile" : "/var/log/supervisor/uwsgi.log",
+      		"stderr_logfile" : "/var/log/supervisor/uwsgi.error.log",
+      		"autostart": true,
+      		"autorestart": true,
+      		"stopsignal": "QUIT"
+      	}
+      }
+    }
+  ]
+}

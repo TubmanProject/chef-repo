@@ -1,0 +1,6 @@
+[<%= @name -%>]
+<% if @config.is_a?(Hash) %>
+<% @config.each_pair do |key, value| %>
+<%= "#{key}=#{value}" %>
+<% end %>
+<% end %>

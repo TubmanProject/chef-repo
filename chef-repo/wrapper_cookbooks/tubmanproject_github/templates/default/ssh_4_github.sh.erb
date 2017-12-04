@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+/usr/bin/env ssh -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -i "<%= @private_key_path %>/<%= @private_key_filename %>" $1 $2

@@ -1,0 +1,6 @@
+{
+    "id": "vagrant",
+    "ssh_keys": [],
+    "groups": [],
+    "shell": "/bin/bash"
+}

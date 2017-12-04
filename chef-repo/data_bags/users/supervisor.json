@@ -1,0 +1,6 @@
+{
+    "id": "supervisor",
+    "ssh_keys": [],
+    "groups": ["supervisor", "www-data"],
+    "shell": "/bin/bash"
+}

@@ -1,0 +1,20 @@
+source 'https://supermarket.chef.io'
+
+cookbook 'users',             '~> 5.2.1'
+cookbook 'openssl',           '~> 7.1.0'
+cookbook 'nginx',             '~> 7.0.0'
+cookbook 'poise-python',      '~> 1.6.0'
+cookbook 'nodejs',            '~> 4.0.0'
+cookbook 'cron',              '~> 4.2.0'
+cookbook 'acme',              '~> 3.1.0'
+
+
+cookbook 'tubmanproject_base', path: '../tubmanproject_base'
+cookbook 'tubmanproject_github', path: '../tubmanproject_github'
+cookbook 'tubmanproject_openssl', path: '../tubmanproject_openssl'
+cookbook 'tubmanproject_nginx', path: '../tubmanproject_nginx'
+cookbook 'tubmanproject_nodejs', path: '../tubmanproject_nodejs'
+cookbook 'tubmanproject_python', path: '../tubmanproject_python'
+cookbook 'tubmanproject_supervisor', path: '../tubmanproject_supervisor'
+
+metadata
