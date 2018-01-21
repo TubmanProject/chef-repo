@@ -1,0 +1,84 @@
+{
+	"id" : "redis-healthcheck",
+	"development" : [
+		{
+			"name" : "redis_healthcheck",
+			"subdomain" : "redis-healthcheck",
+			"domain" : "tubmanproject.test",
+			"port" : 3011,
+			"nginx_config_template": "nginx.conf.erb",
+			"ssl": false,
+  	  "npm" : {
+  	  	"global": [
+					"pm2"
+				],
+  	  	"local": []
+  	  },
+  	  "apt" : [],
+  	  "commands" : [
+				"sudo pm2 startup",
+				"sudo pm2 start /var/tubmanproject.test/pm2/ecosystem.json",
+				"sudo pm2 save"
+			],
+  	  "cron_jobs" : [],
+			"git" : {
+				"repository" : "git@github.com:tyronemsaunders/mintyross-redis.git",
+				"branch" : "master"
+			}
+		}
+	],
+	"staging" : [
+		{
+			"name" : "redis_healthcheck",
+			"subdomain" : "tubmanproject-redis-healthcheck-staging",
+			"domain" : "mintyross.com",
+			"port" : 3011,
+			"nginx_config_template": "nginx.conf.erb",
+			"ssl": false,
+  	  "npm" : {
+  	  	"global": [
+					"pm2"
+				],
+  	  	"local": []
+  	  },
+  	  "apt" : [],
+  	  "commands" : [
+				"sudo pm2 startup",
+				"sudo pm2 start /var/mintyross.com/pm2/ecosystem.json",
+				"sudo pm2 save"
+			],
+  	  "cron_jobs" : [],
+			"git" : {
+				"repository" : "git@github.com:tyronemsaunders/mintyross-redis.git",
+				"branch" : "master"
+			}
+		}
+	],
+	"production" : [
+		{
+			"name" : "redis_healthcheck",
+			"subdomain" : "tubmanproject-redis-healthcheck",
+			"domain" : "mintyross.com",
+			"port" : 3011,
+			"nginx_config_template": "nginx.conf.erb",
+			"ssl": false,
+  	  "npm" : {
+  	  	"global": [
+					"pm2"
+				],
+  	  	"local": []
+  	  },
+  	  "apt" : [],
+  	  "commands" : [
+				"sudo pm2 startup",
+				"sudo pm2 start /var/mintyross.com/pm2/ecosystem.json",
+				"sudo pm2 save"
+			],
+  	  "cron_jobs" : [],
+			"git" : {
+				"repository" : "git@github.com:tyronemsaunders/mintyross-redis.git",
+				"branch" : "master"
+			}
+		}
+	]
+}

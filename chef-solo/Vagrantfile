@@ -8,14 +8,14 @@ Vagrant.configure(2) do |config|
   config.trigger.before :up do
     run "berks vendor #{File.join(root_dir, 'chef-repo', 'cookbooks')} --delete --berksfile #{File.join(root_dir, 'Berksfile')}"
   end
-  
+
   config.trigger.after :destroy do
     run "rm -rf #{File.join(root_dir, 'chef-repo', 'cookbooks')}"
   end
-  
+
   # organization name for the Chef Server
   orgname = "ORGNAME"
-  
+
   # Chef Environment
   chef_environment = "development"
 
@@ -38,7 +38,7 @@ Vagrant.configure(2) do |config|
   # Install vagrant-omnibus using the command...
   # $ vagrant plugin install vagrant-omnibus
 
-  config.omnibus.chef_version = "12.19.33" #:latest
+  config.omnibus.chef_version = '12.21.31' #:latest
 
   ####################################
   ######### Hosts Management #########
@@ -66,7 +66,7 @@ Vagrant.configure(2) do |config|
   # integration to the Chef provisioners.
   # install vagrant-berkshelf using the command...
   # $ vagrant plugin install vagrant-berkshelf
-  
+
   # path to the Berksfile to use
   config.berkshelf.berksfile_path = File.join(root_dir, 'Berksfile') #"../Berksfile"
   # enable berkshelf
@@ -182,7 +182,7 @@ Vagrant.configure(2) do |config|
         machine.vm.provider :virtualbox do |vb|
           # turn on the GUI
           # vb.gui = true
-          
+
           # Change the VM's name
           vb.customize ["modifyvm", :id, "--name", machine_name]
 
@@ -195,21 +195,21 @@ Vagrant.configure(2) do |config|
         ####################################
         ########### Provisioning ###########
         ####################################
-        
+
         #Chef configuration and provisioning
         machine.vm.provision "chef_solo", type: "chef_solo" do |chef|
-            chef.cookbooks_path = [File.join(root_dir, 'chef-repo', 'cookbooks')]
-            chef.data_bags_path = [File.join(root_dir, 'chef-repo', 'data_bags')]
-            chef.environments_path = File.join(root_dir, 'chef-repo', 'environment')
-            chef.roles_path = File.join(root_dir, 'chef-repo', 'roles')
-            chef.environment = chef_environment || "development"
-            chef.node_name = machine_name
-            chef.encrypted_data_bag_secret_key_path = File.join(root_dir, 'chef-repo', '.chef', 'encrypted_data_bag_secret')
-            chef.custom_config_path = File.join(root_dir, 'chef-repo', '.chef', 'vagrant_chef_solo.rb')
-            chef.provisioning_path = "/etc/chef"
-            chef.log_level = :info
-            chef.run_list = node_json["run_list"]
-          end # machine.vm.provision "chef_solo", type: :chef_solo do |chef|
+          chef.cookbooks_path = [File.join(root_dir, 'chef-repo', 'cookbooks')]
+          chef.data_bags_path = [File.join(root_dir, 'chef-repo', 'data_bags')]
+          chef.environments_path = File.join(root_dir, 'chef-repo', 'environment')
+          chef.roles_path = File.join(root_dir, 'chef-repo', 'roles')
+          chef.environment = chef_environment || "development"
+          chef.node_name = machine_name
+          chef.encrypted_data_bag_secret_key_path = File.join(root_dir, 'chef-repo', '.chef', 'encrypted_data_bag_secret')
+          chef.custom_config_path = File.join(root_dir, 'chef-repo', '.chef', 'vagrant_chef_solo.rb')
+          chef.provisioning_path = "/etc/chef"
+          chef.log_level = :info
+          chef.run_list = node_json['run_list']
+        end # machine.vm.provision "chef_solo", type: :chef_solo do |chef|
 
       end # config.vm.define machine_name do |machine|
     end # if node_json["vagrant"]

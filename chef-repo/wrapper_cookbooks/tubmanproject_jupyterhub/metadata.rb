@@ -27,7 +27,6 @@ depends 'acme',              '~> 3.1.0'
 
 depends 'tubmanproject_base'
 depends 'tubmanproject_github'
-depends 'tubmanproject_openssl'
 depends 'tubmanproject_nginx'
 depends 'tubmanproject_nodejs'
 depends 'tubmanproject_python'

@@ -6,6 +6,7 @@
 node.override['nginx']['install_method'] = 'source'
 node.override['nginx']['version'] = '1.12.2'
 node.override['nginx']['default_site_enabled'] = false
+node.override['nginx']['server_names_hash_bucket_size'] = 128
 node.override['nginx']['source']['modules'] = [
   'nginx::ipv6',
   'nginx::http_echo_module',

@@ -1,5 +1,5 @@
 {
-  "name": "tubmanproject.dev",
+  "name": "tubmanproject.test",
   "chef_environment": "development",
   "json_class": "Chef::Node",
   "automatic": {
@@ -16,11 +16,19 @@
 
   },
   "vagrant" : {
-  	":name": "tubmanproject.dev",
+  	":name": "tubmanproject.test",
   	"exclusions": [],
   	":ip": "192.168.81.80",
-  	":host": "tubmanproject.dev",
-  	":aliases": ["jupyterhub.tubmanproject.dev", "api.tubmanproject.dev", "mongodb.tubmanproject.dev", "tubmanproject.dev"],
+  	":host": "tubmanproject.test",
+  	":aliases": [
+      "jupyterhub.tubmanproject.test",
+      "api.tubmanproject.test",
+      "mongodb.tubmanproject.test",
+      "rabbitmq.tubmanproject.test",
+      "redis.tubmanproject.test",
+      "rabbitmq-healthcheck.tubmanproject.test",
+      "redis-healthcheck.tubmanproject.test",
+      "tubmanproject.test"],
   	"ports": [
   		{
   			":host": 8080,
@@ -39,7 +47,7 @@
   	"synced_folder": [
   		{
   			":host_machine_path": "../api",
-  			":guest_machine_path": "/var/tubmanproject.dev/api",
+  			":guest_machine_path": "/var/tubmanproject.test/api",
   			"ownership_options": {
 	  			":owner": "vagrant",
 	  			":group": "www-data",
@@ -51,7 +59,31 @@
   		},
   		{
   			":host_machine_path": "../jupyterhub",
-  			":guest_machine_path": "/var/tubmanproject.dev/jupyterhub",
+  			":guest_machine_path": "/var/tubmanproject.test/jupyterhub",
+  			"ownership_options": {
+	  			":owner": "vagrant",
+	  			":group": "www-data",
+	  			":mount_options": {
+	  				":dmode":775,
+	  				":fmode":775
+	  			}
+  			}
+  		},
+  		{
+  			":host_machine_path": "../redis-healthcheck",
+  			":guest_machine_path": "/var/tubmanproject.test/redis-healthcheck",
+  			"ownership_options": {
+	  			":owner": "vagrant",
+	  			":group": "www-data",
+	  			":mount_options": {
+	  				":dmode":775,
+	  				":fmode":775
+	  			}
+  			}
+  		},
+  		{
+  			":host_machine_path": "../rabbitmq-healthcheck",
+  			":guest_machine_path": "/var/tubmanproject.test/rabbitmq-healthcheck",
   			"ownership_options": {
 	  			":owner": "vagrant",
 	  			":group": "www-data",
@@ -64,6 +96,37 @@
   	]
   },
   "run_list": [
-  	
+    "tubmanproject_base::base",
+    "tubmanproject_github::ssh-wrapper",
+    "tubmanproject_nginx::install",
+    "tubmanproject_python::install",
+    "tubmanproject_nodejs::install",
+    "tubmanproject_supervisor::install",
+    "tubmanproject_docker::install",
+    "tubmanproject_hosts::hosts",
+    "tubmanproject_haproxy::install",
+    "tubmanproject_mongodb::selfsigned-certificate",
+    "tubmanproject_mongodb::install",
+    "tubmanproject_mongodb::users",
+    "tubmanproject_mongodb::settings",
+    "tubmanproject_rabbitmq::selfsigned-certificate",
+    "tubmanproject_rabbitmq::single",
+    "tubmanproject_rabbitmq::settings",
+    "tubmanproject_haproxy::rabbitmq",
+    "tubmanproject_rabbitmq::healthcheck",
+    "tubmanproject_redis::selfsigned-certificate",
+    "tubmanproject_redis::master",
+    "tubmanproject_redis::install",
+    "tubmanproject_redis::settings",
+    "tubmanproject_haproxy::redis",
+    "tubmanproject_redis::healthcheck",
+    "tubmanproject_docker::jupyterhub-image",
+    "tubmanproject_jupyterhub::selfsigned-certificate",
+    "tubmanproject_jupyterhub::deploy",
+    "tubmanproject_app::selfsigned-certificate",
+    "tubmanproject_app::settings",
+    "tubmanproject_app::deploy",
+    "tubmanproject_supervisor::restart",
+    "tubmanproject_app::uwsgi-reload"
   ]
 }

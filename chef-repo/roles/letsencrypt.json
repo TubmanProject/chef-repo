@@ -1,0 +1,19 @@
+{
+  "name": "letsencrypt",
+  "description": "A role to configure letsencrypt ssl certificates",
+  "json_class": "Chef::Role",
+  "default_attributes": {
+
+  },
+  "override_attributes": {
+
+  },
+  "chef_type": "role",
+  "run_list": [
+    "recipe[tubmanproject_app::letsencrypt]",
+    "recipe[tubmanproject_jupyterhub::letsencrypt]"
+  ],
+  "env_run_lists": {
+
+  }
+}

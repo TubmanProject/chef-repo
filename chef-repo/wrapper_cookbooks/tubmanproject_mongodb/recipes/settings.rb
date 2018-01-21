@@ -4,33 +4,32 @@
 #
 # Copyright:: 2017, Tyrone Saunders, All Rights Reserved.
 
-###############################
-# user/owner for applications #
-###############################
-default['app']['user'] = "www-data"
-
-Chef::Recipe.send(:include, OpenSSLCookbook::RandomPassword)
-
 mongodb = node['secrets']['mongodb'][node.chef_environment]
 
-mongdb_settings = {}
+mongodb_settings = {}
 
 mongodb_settings['HOST'] = "#{mongodb['hostname']}.#{mongodb['domain']}"
 mongodb_settings['HOSTNAME'] = mongodb['hostname']
+mongodb_settings['PORT'] = mongodb['port']
 mongodb_settings['USERS'] = mongodb['users']
 mongodb_settings['PEMKeyFile'] = "#{node['mongodb']['directories']['ssl']}/#{node['mongodb']['pem_keyfile_name']}"
-
 
 node.override['mongodb']['settings'] = mongodb_settings
 
 ####################################
 # create configuration directories #
 ####################################
+group 'config-secrets' do
+  action :modify
+  append true
+  members [node['ssh']['user'], node['app']['user']]
+end
+
 directory "/etc/xdg/.config/mongodb" do
   recursive true
-  owner node['app']['user']
-  group 'mongodb'
-  mode "0770"
+  owner node['ssh']['user']
+  group 'config-secrets'
+  mode '0750'
 end
 
 #######################
@@ -38,7 +37,7 @@ end
 #######################
 file "/etc/xdg/.config/mongodb/secrets.json" do
   content lazy {Chef::JSONCompat.to_json_pretty(node['mongodb']['settings'])}
-  owner node['app']['user']
-  group 'mongodb'
-  mode 0660
+  owner node['ssh']['user']
+  group 'config-secrets'
+  mode '0550'
 end

@@ -4,19 +4,20 @@
     {
       "subdomain" : "jupyterhub",
       "hostname" : "tubmanproject-jupyterhub-development",
-      "domain" : "tubmanproject.dev",
+      "domain" : "tubmanproject.test",
       "port" : 5010,
       "nginx_config_template" : "jupyterhub-nginx.conf.erb",
 	  "ssl" : false,
+    "acme_cert": {
+      "requested": false,
+      "challenge": "http-01"
+    },
 	  "npm" : {
 	  	"global": ["configurable-http-proxy"],
 	  	"local": []
 	  },
 	  "apt" : [],
-	  "commands" : [
-	  	"/var/tubmanproject.dev/jupyterhub/.venv/bin/jupyter contrib nbextension install --sys-prefix",
-	  	"/var/tubmanproject.dev/jupyterhub/.venv/bin/jupyter nbextension enable --py widgetsnbextension --sys-prefix"
-	  ],
+	  "commands" : [],
       "git" : {
         "repository" : "git@github.com:tubmanproject/jupyterhub.git",
         "branch" : "master"
@@ -33,8 +34,8 @@
       },
       "programs" : {
       	"jupyterhub" : {
-      		"command" : "/var/tubmanproject.dev/jupyterhub/.venv/bin/jupyterhub -f /etc/jupyterhub/jupyterhub.tubmanproject.dev_config.py",
-      		"directory" : "/var/tubmanproject.dev/jupyterhub",
+      		"command" : "/var/tubmanproject.test/jupyterhub/.venv/bin/jupyterhub -f /etc/jupyterhub/jupyterhub.tubmanproject.test_config.py",
+      		"directory" : "/var/tubmanproject.test/jupyterhub",
       		"redirect_stderr" : true,
       		"stdout_logfile" : "/var/log/supervisor/jupyterhub.log",
       		"stderr_logfile" : "/var/log/supervisor/jupyterhub.error.log",
@@ -53,15 +54,16 @@
       "port" : 5010,
       "nginx_config_template" : "jupyterhub-nginx.conf.erb",
 	  "ssl" : true,
+    "acme_cert": {
+      "requested": true,
+      "challenge": "http-01"
+    },
 	  "npm" : {
 	  	"global": ["configurable-http-proxy"],
 	  	"local": []
 	  },
 	  "apt" : [],
-	  "commands" : [
-	  	"/var/mintyross.com/tubmanproject-jupyterhub-staging/.venv/bin/jupyter contrib nbextension install --sys-prefix",
-	  	"/var/mintyross.com/tubmanproject-jupyterhub-staging/.venv/bin/jupyter nbextension enable --py widgetsnbextension --sys-prefix"
-	  ],
+	  "commands" : [],
       "git" : {
         "repository" : "git@github.com:tubmanproject/jupyterhub.git",
         "branch" : "master"
@@ -98,15 +100,16 @@
       "port" : 5010,
       "nginx_config_template" : "jupyterhub-nginx.conf.erb",
 	  "ssl" : true,
+    "acme_cert": {
+      "requested": true,
+      "challenge": "http-01"
+    },
 	  "npm" : {
 	  	"global": ["configurable-http-proxy"],
 	  	"local": []
 	  },
 	  "apt" : [],
-	  "commands" : [
-	  	"/var/mintyross.com/tubmanproject-jupyterhub/.venv/bin/jupyter contrib nbextension install --sys-prefix",
-	  	"/var/mintyross.com/tubmanproject-jupyterhub/.venv/bin/jupyter nbextension enable --py widgetsnbextension --sys-prefix"
-	  ],
+	  "commands" : [],
       "git" : {
         "repository" : "git@github.com:tubmanproject/jupyterhub.git",
         "branch" : "master"

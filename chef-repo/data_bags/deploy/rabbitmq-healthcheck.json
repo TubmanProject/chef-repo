@@ -1,0 +1,84 @@
+{
+	"id" : "rabbitmq-healthcheck",
+	"development" : [
+		{
+			"name" : "rabbitmq_healthcheck",
+			"subdomain" : "rabbitmq-healthcheck",
+			"domain" : "tubmanproject.test",
+			"port" : 3001,
+			"nginx_config_template": "nginx.conf.erb",
+			"ssl": false,
+  	  "npm" : {
+  	  	"global": [
+					"pm2"
+				],
+  	  	"local": []
+  	  },
+  	  "apt" : [],
+  	  "commands" : [
+				"sudo pm2 startup",
+				"sudo pm2 start /var/tubmanproject.test/pm2/ecosystem.json",
+				"sudo pm2 save"
+			],
+  	  "cron_jobs" : [],
+			"git" : {
+				"repository" : "git@github.com:tyronemsaunders/mintyross-rabbitmq.git",
+				"branch" : "master"
+			}
+		}
+	],
+	"staging" : [
+		{
+			"name" : "rabbitmq_healthcheck",
+			"subdomain" : "tubmanproject-rabbitmq-healthcheck-staging",
+			"domain" : "mintyross.com",
+			"port" : 3001,
+			"nginx_config_template": "nginx.conf.erb",
+			"ssl": false,
+  	  "npm" : {
+  	  	"global": [
+					"pm2"
+				],
+  	  	"local": []
+  	  },
+  	  "apt" : [],
+  	  "commands" : [
+				"sudo pm2 startup",
+				"sudo pm2 start /var/mintyross.com/pm2/ecosystem.json",
+				"sudo pm2 save"
+			],
+  	  "cron_jobs" : [],
+			"git" : {
+				"repository" : "git@github.com:tyronemsaunders/mintyross-rabbitmq.git",
+				"branch" : "master"
+			}
+		}
+	],
+	"production" : [
+		{
+			"name" : "rabbitmq_healthcheck",
+			"subdomain" : "tubmanproject-rabbitmq-healthcheck",
+			"domain" : "mintyross.com",
+			"port" : 3001,
+			"nginx_config_template": "nginx.conf.erb",
+			"ssl": false,
+  	  "npm" : {
+  	  	"global": [
+					"pm2"
+				],
+  	  	"local": []
+  	  },
+  	  "apt" : [],
+  	  "commands" : [
+				"sudo pm2 startup",
+				"sudo pm2 start /var/mintyross.com/pm2/ecosystem.json",
+				"sudo pm2 save"
+			],
+  	  "cron_jobs" : [],
+			"git" : {
+				"repository" : "git@github.com:tyronemsaunders/mintyross-rabbitmq.git",
+				"branch" : "master"
+			}
+		}
+	]
+}

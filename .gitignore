@@ -116,9 +116,13 @@ venv.bak/
 
 chef-repo/.chef/*.pem
 chef-repo/.chef/encrypted_data_bag_secret
+chef-repo/.chef/keys
+chef-repo/.chef/syntaxcache
+chef-repo/.chef/nodes
 chef-repo/data_bags/secrets/*.json
 chef-repo/cookbooks
 chef-repo/nodes/*.json
+Berksfile.lock
 
 ###################
 # Aptana Studio 3 #

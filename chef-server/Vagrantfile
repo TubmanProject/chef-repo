@@ -8,14 +8,14 @@ Vagrant.configure(2) do |config|
   config.trigger.before :up do
     run "berks vendor #{File.join(root_dir, 'chef-repo', 'cookbooks')} --delete --berksfile #{File.join(root_dir, 'Berksfile')}"
   end
-  
+
   config.trigger.after :destroy do
     run "rm -rf #{File.join(root_dir, 'chef-repo', 'cookbooks')}"
   end
-  
+
   # organization name for the Chef Server
   orgname = "ORGNAME"
-  
+
   # Chef Environment
   chef_environment = "development"
 
@@ -38,7 +38,7 @@ Vagrant.configure(2) do |config|
   # Install vagrant-omnibus using the command...
   # $ vagrant plugin install vagrant-omnibus
 
-  config.omnibus.chef_version = "12.19.33" #:latest
+  config.omnibus.chef_version = '12.21.26' #:latest
 
   ####################################
   ######### Hosts Management #########
@@ -66,7 +66,7 @@ Vagrant.configure(2) do |config|
   # integration to the Chef provisioners.
   # install vagrant-berkshelf using the command...
   # $ vagrant plugin install vagrant-berkshelf
-  
+
   # path to the Berksfile to use
   config.berkshelf.berksfile_path = File.join(root_dir, 'Berksfile') #"../Berksfile"
   # enable berkshelf
@@ -182,7 +182,7 @@ Vagrant.configure(2) do |config|
         machine.vm.provider :virtualbox do |vb|
           # turn on the GUI
           # vb.gui = true
-          
+
           # Change the VM's name
           vb.customize ["modifyvm", :id, "--name", machine_name]
 
@@ -195,7 +195,7 @@ Vagrant.configure(2) do |config|
         ####################################
         ########### Provisioning ###########
         ####################################
-        
+
         #Chef configuration and provisioning
         machine.vm.provision "chef_server", type: "chef_client", run: "never" do |chef|
           chef.chef_server_url = "https://api.chef.io/organizations/#{orgname}" # hosted chef url or self host a chef server

@@ -1,0 +1,11 @@
+source 'https://supermarket.chef.io'
+
+cookbook 'redisio',           '~> 2.6.1'
+cookbook 'openssl',           '~> 7.1.0'
+
+cookbook 'tubmanproject_base', path: '../tubmanproject_base'
+cookbook 'tubmanproject_github', path: '../tubmanproject_github'
+cookbook 'tubmanproject_nginx', path: '../tubmanproject_nginx'
+cookbook 'tubmanproject_nodejs', path: '../tubmanproject_nodejs'
+
+metadata

@@ -4,3 +4,9 @@
 [submodule "api"]
 	path = api
 	url = https://github.com/TubmanProject/data_scraper.git
+[submodule "rabbitmq-healthcheck"]
+	path = rabbitmq-healthcheck
+	url = git@github.com:tyronemsaunders/mintyross-rabbitmq.git
+[submodule "redis-healthcheck"]
+	path = redis-healthcheck
+	url = git@github.com:tyronemsaunders/mintyross-redis.git

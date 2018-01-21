@@ -9,7 +9,7 @@
 ######################
 # install supvervisor
 python_package 'supervisor' do
-  python '3'
+  python '2'
 end
 
 # create supervisor user group
@@ -19,7 +19,7 @@ users_manage 'supervisor'
 group "supervisor" do
   action :modify
   append true
-  members ['www-data']
+  members [node['app']['user'], node['ssh']['user']]
 end
 
 # create directories
@@ -29,7 +29,7 @@ directories.each do |path|
     recursive true
     owner 'supervisor'
     group node['app']['user']
-    mode '0770'
+    mode '0750'
   end
 end
 
@@ -56,7 +56,7 @@ supervisor_service_file = {
     'RestartSec' => '50s'
   },
   'Install' => {
-    'WantedBy' => 'multi-user.target' 
+    'WantedBy' => 'multi-user.target'
   }
 }
 

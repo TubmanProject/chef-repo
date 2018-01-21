@@ -13,11 +13,11 @@ execute "bootstrap EC2 node" do
   cmd += " --flavor #{node['secrets']['aws']['instance_type']}"
   cmd += " --image #{node['secrets']['aws']['image_id']}" # Ubuntu 16.04 LTS - Xenial (HVM) (US East N. Virginia)
   cmd += " --security-group-id webserver"
-  cmd += " --node-name monolith.#{app['domain']}"
+  cmd += " --node-name tubmanproject.#{app['domain']}"
   cmd += " --ssh-user ubuntu"
   cmd += " --identity-file #{node['secrets']['aws']['aws_key_path']}/#{node['secrets']['aws']['aws_key_name']}.pem"
-  cmd += " --bootstrap-version 12.19.36"
+  cmd += " --bootstrap-version 12.21.26"
   cmd += " --config #{node['secrets']['host_machine']['project_path']}/chef-repo/.chef/config.rb"
-  cmd += " --environment production"
+  # cmd += " --environment production"
   command cmd
 end

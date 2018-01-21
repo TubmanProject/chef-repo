@@ -1,6 +1,6 @@
 {
   "name": "development",
-  "description": "A role to configure the development server for tubmanproject.dev",
+  "description": "A role to configure the development server for tubmanproject.test",
   "json_class": "Chef::Role",
   "default_attributes": {
 
@@ -9,7 +9,41 @@
 
   },
   "chef_type": "role",
-  "run_list": [],
+  "run_list": [
+    "recipe[tubmanproject_base::base]",
+    "recipe[tubmanproject_github::ssh-wrapper]",
+    "recipe[tubmanproject_github::ssh-config]",
+    "recipe[tubmanproject_nginx::install]",
+    "recipe[tubmanproject_python::install]",
+    "recipe[tubmanproject_nodejs::install]",
+    "recipe[tubmanproject_supervisor::install]",
+    "recipe[tubmanproject_docker::install]",
+    "recipe[tubmanproject_hosts::hosts]",
+    "recipe[tubmanproject_haproxy::install]",
+    "recipe[tubmanproject_mongodb::selfsigned-certificate]",
+    "recipe[tubmanproject_mongodb::install]",
+    "recipe[tubmanproject_mongodb::users]",
+    "recipe[tubmanproject_mongodb::settings]",
+    "recipe[tubmanproject_rabbitmq::selfsigned-certificate]",
+    "recipe[tubmanproject_rabbitmq::single]",
+    "recipe[tubmanproject_rabbitmq::settings]",
+    "recipe[tubmanproject_haproxy::rabbitmq]",
+    "recipe[tubmanproject_rabbitmq::healthcheck]",
+    "recipe[tubmanproject_redis::selfsigned-certificate]",
+    "recipe[tubmanproject_redis::master]",
+    "recipe[tubmanproject_redis::install]",
+    "recipe[tubmanproject_redis::settings]",
+    "recipe[tubmanproject_haproxy::redis]",
+    "recipe[tubmanproject_redis::healthcheck]",
+    "recipe[tubmanproject_docker::jupyterhub-image]",
+    "recipe[tubmanproject_jupyterhub::selfsigned-certificate]",
+    "recipe[tubmanproject_jupyterhub::deploy]",
+    "recipe[tubmanproject_app::selfsigned-certificate]",
+    "recipe[tubmanproject_app::settings]",
+    "recipe[tubmanproject_app::deploy]",
+    "recipe[tubmanproject_supervisor::restart]",
+    "recipe[tubmanproject_app::uwsgi-reload]"
+  ],
   "env_run_lists": {
 
   }

@@ -4,25 +4,60 @@
     {
       "subdomain" : "api",
       "hostname" : "tubmanproject-api-development",
-      "domain" : "tubmanproject.dev",
+      "domain" : "tubmanproject.test",
       "port" : 5001,
       "nginx_config_template": "nginx.conf.erb",
-	  "ssl": false,
-	  "jupyter": false,
-	  "npm" : {
-	  	"global": [],
-	  	"local": []
-	  },
-	  "apt" : [],
-	  "commands" : [],
-	  "cron_jobs" : [],
+	    "ssl": false,
+      "acme_cert": {
+        "requested": false,
+        "challenge": "tls-sni-01"
+      },
+	    "jupyter": true,
+  	  "npm" : {
+  	  	"global": [],
+  	  	"local": []
+  	  },
+  	  "apt" : [],
+  	  "commands" : [
+        "sudo -E /var/tubmanproject.test/api/.venv/bin/flask initdb",
+        "find /var/tubmanproject.test/api/ -type d -exec sudo chown -R www-data:www-data {} \\;",
+        "find /var/tubmanproject.test/api/ -type f -exec sudo chmod -R 644 {} \\;",
+        "find /var/tubmanproject.test/api/.venv -type f -exec sudo chmod -R 755 {} \\;",
+        "find /var/log/api.tubmanproject.test/ -type f -exec sudo chown -R www-data:supervisor {} \\;",
+        "find /var/log/api.tubmanproject.test/ -type f -exec sudo chmod -R 664 {} \\;",
+        "sudo chmod -R g+rws /var/tubmanproject.test/api/app/templates/jupyter_notebooks",
+        "sudo setfacl -dR -m g::rwx /var/tubmanproject.test/api/app/templates/jupyter_notebooks"
+      ],
+      "bootstrap": true,
+  	  "cron_jobs" : [
+        {
+          "name" : "tubmanproject-scrape_disposition-today",
+          "command" : "/var/tubmanproject.test/api/.venv/bin/flask scrape --type disposition",
+          "minute" : "15",
+          "hour" : "17",
+          "day" : "*",
+          "month" : "*",
+          "weekday" : "*",
+          "mailto" : ""
+        },
+        {
+          "name" : "tubmanproject-scrape_filing-today",
+          "command" : "/var/tubmanproject.test/api/.venv/bin/flask scrape --type filing",
+          "minute" : "30",
+          "hour" : "17",
+          "day" : "*",
+          "month" : "*",
+          "weekday" : "*",
+          "mailto" : ""
+        }
+      ],
       "git" : {
         "repository" : "git@github.com:tubmanproject/data_scraper.git",
-        "branch" : "master"
+        "branch" : "develop"
       },
       "config" : {
       	"uwsgi" : {
-      		"wsgi-file" : "/var/tubmanproject.dev/api/wsgi.py",
+      		"wsgi-file" : "/var/tubmanproject.test/api/wsgi.py",
       		"protocol" : "uwsgi",
       		"module" : "wsgi",
       		"callable" : "app",
@@ -34,18 +69,31 @@
       		"chmod-socket" : 666,
       		"vacuum" : true,
       		"disable-logging" : true,
-      		"max-worker-lifetime" : 30	
+      		"max-worker-lifetime" : 30
       	}
       },
       "programs" : {
       	"uwsgi" : {
-      		"command" : "/var/tubmanproject.dev/api/.venv/bin/uwsgi --ini /var/tubmanproject.dev/api/.uwsgi/app.ini",
-      		"directory" : "/var/tubmanproject.dev/api",
+      		"command" : "/var/tubmanproject.test/api/.venv/bin/uwsgi --ini /var/tubmanproject.test/api/.uwsgi/app.ini",
+      		"directory" : "/var/tubmanproject.test/api",
       		"redirect_stderr" : true,
       		"stdout_logfile" : "/var/log/supervisor/uwsgi.log",
       		"stderr_logfile" : "/var/log/supervisor/uwsgi.error.log",
       		"autostart": true,
       		"autorestart": true,
+      		"stopsignal": "QUIT"
+      	},
+        "celery": {
+      		"command" : "/var/tubmanproject.test/api/.venv/bin/celery -A run_celery_worker.celery worker -l info --logfile=/var/log/celery/%%n-%%i.log --pidfile=/var/run/celery/%%n.pid",
+      		"directory" : "/var/tubmanproject.test/api",
+      		"redirect_stderr" : true,
+      		"stdout_logfile" : "/var/log/supervisor/celery.log",
+      		"stderr_logfile" : "/var/log/supervisor/celery.error.log",
+      		"autostart": true,
+      		"autorestart": true,
+      		"startsecs" : 10,
+      		"stopwaitsecs" : 600,
+      		"killasgroup": true,
       		"stopsignal": "QUIT"
       	}
       }
@@ -58,17 +106,52 @@
       "domain" : "mintyross.com",
       "port" : 5001,
       "nginx_config_template": "nginx.conf.erb",
-	  "ssl": true,
-	  "jupyter": true,
-	  "npm" : {
-	  	"global": [],
-	  	"local": []
-	  },
-	  "apt" : [],
-	  "commands" : [],
-	  "cron_jobs" : [],
+  	  "ssl": false,
+      "acme_cert": {
+        "requested": true,
+        "challenge": "http-01"
+      },
+  	  "jupyter": true,
+  	  "npm" : {
+  	  	"global": [],
+  	  	"local": []
+  	  },
+  	  "apt" : [],
+  	  "commands" : [
+        "sudo -E /var/mintyross.com/tubmanproject-api-staging/.venv/bin/flask initdb",
+        "find /var/mintyross.com/tubmanproject-api-staging -type d -exec sudo chown -R www-data:www-data {} \\;",
+        "find /var/mintyross.com/tubmanproject-api-staging -type f -exec sudo chmod -R 644 {} \\;",
+        "find /var/mintyross.com/tubmanproject-api-staging/.venv -type f -exec sudo chmod -R 755 {} \\;",
+        "find /var/log/tubmanproject-api-staging.mintyross.com/ -type f -exec sudo chown -R www-data:supervisor {} \\;",
+        "find /var/log/tubmanproject-api-staging.mintyross.com/ -type f -exec sudo chmod -R 664 {} \\;",
+        "sudo chmod -R g+rws /var/mintyross.com/tubmanproject-api-staging/app/templates/jupyter_notebooks",
+        "sudo setfacl -dR -m g::rwx /var/mintyross.com/tubmanproject-api-staging/app/templates/jupyter_notebooks"
+      ],
+      "bootstrap": true,
+  	  "cron_jobs" : [
+        {
+          "name" : "tubmanproject-scrape_disposition-today",
+          "command" : "/var/mintyross.com/tubmanproject-api-staging/.venv/bin/flask scrape --type disposition",
+          "minute" : "15",
+          "hour" : "17",
+          "day" : "*",
+          "month" : "*",
+          "weekday" : "*",
+          "mailto" : ""
+        },
+        {
+          "name" : "tubmanproject-scrape_filing-today",
+          "command" : "/var/mintyross.com/tubmanproject-api-staging/.venv/bin/flask scrape --type filing",
+          "minute" : "30",
+          "hour" : "17",
+          "day" : "*",
+          "month" : "*",
+          "weekday" : "*",
+          "mailto" : ""
+        }
+      ],
       "git" : {
-        "repository" : "git@github.com:tubmanproject/data_scraper.git",
+        "repository" : "git@github.com:tyronemsaunders/tubmanproject_api.git",
         "branch" : "master"
       },
       "config" : {
@@ -85,7 +168,7 @@
       		"chmod-socket" : 666,
       		"vacuum" : true,
       		"disable-logging" : true,
-      		"max-worker-lifetime" : 30	
+      		"max-worker-lifetime" : 30
       	}
       },
       "programs" : {
@@ -98,6 +181,19 @@
       		"autostart": true,
       		"autorestart": true,
       		"stopsignal": "QUIT"
+      	},
+        "celery": {
+      		"command" : "/var/mintyross.com/tubmanproject-api-staging/.venv/bin/celery -A run_celery_worker.celery worker -l info --logfile=/var/log/celery/%%n-%%i.log --pidfile=/var/run/celery/%%n.pid",
+      		"directory" : "/var/mintyross.com/tubmanproject-api-staging",
+      		"redirect_stderr" : true,
+      		"stdout_logfile" : "/var/log/supervisor/celery.log",
+      		"stderr_logfile" : "/var/log/supervisor/celery.error.log",
+      		"autostart": true,
+      		"autorestart": true,
+      		"startsecs" : 10,
+      		"stopwaitsecs" : 600,
+      		"killasgroup": true,
+      		"stopsignal": "QUIT"
       	}
       }
     }
@@ -105,21 +201,56 @@
   "production" : [
     {
       "subdomain" : "tubmanproject-api",
-      "hostname" : "tubmanproject-api-production",
+      "hostname" : "tubmanproject-api",
       "domain" : "mintyross.com",
       "port" : 5001,
       "nginx_config_template": "nginx.conf.erb",
-	  "ssl": true,
-	  "jupyter": true,
-	  "npm" : {
-	  	"global": [],
-	  	"local": []
-	  },
-	  "apt" : [],
-	  "commands" : [],
-	  "cron_jobs" : [],
+  	  "ssl": true,
+      "acme_cert": {
+        "requested": true,
+        "challenge": "http-01"
+      },
+  	  "jupyter": true,
+  	  "npm" : {
+  	  	"global": [],
+  	  	"local": []
+  	  },
+  	  "apt" : [],
+  	  "commands" : [
+        "sudo -E /var/mintyross.com/tubmanproject-api/.venv/bin/flask initdb",
+        "find /var/mintyross.com/tubmanproject-api -type d -exec sudo chown -R www-data:www-data {} \\;",
+        "find /var/mintyross.com/tubmanproject-api -type f -exec sudo chmod -R 644 {} \\;",
+        "find /var/mintyross.com/tubmanproject-api/.venv -type f -exec sudo chmod -R 755 {} \\;",
+        "find /var/log/tubmanproject-api.mintyross.com/ -type f -exec sudo chown -R www-data:supervisor {} \\;",
+        "find /var/log/tubmanproject-api.mintyross.com/ -type f -exec sudo chmod -R 664 {} \\;",
+        "sudo chmod -R g+rws /var/mintyross.com/tubmanproject-api/app/templates/jupyter_notebooks",
+        "sudo setfacl -dR -m g::rwx /var/mintyross.com/tubmanproject-api/app/templates/jupyter_notebooks"
+      ],
+      "bootstrap": true,
+  	  "cron_jobs" : [
+        {
+          "name" : "tubmanproject-scrape_disposition-today",
+          "command" : "/var/mintyross.com/tubmanproject-api/.venv/bin/flask scrape --type disposition",
+          "minute" : "15",
+          "hour" : "17",
+          "day" : "*",
+          "month" : "*",
+          "weekday" : "*",
+          "mailto" : ""
+        },
+        {
+          "name" : "tubmanproject-scrape_filing-today",
+          "command" : "/var/mintyross.com/tubmanproject-api/.venv/bin/flask scrape --type filing",
+          "minute" : "30",
+          "hour" : "17",
+          "day" : "*",
+          "month" : "*",
+          "weekday" : "*",
+          "mailto" : ""
+        }
+      ],
       "git" : {
-        "repository" : "git@github.com:tubmanproject/data_scraper.git",
+        "repository" : "git@github.com:tyronemsaunders/tubmanproject_api.git",
         "branch" : "master"
       },
       "config" : {
@@ -136,7 +267,7 @@
       		"chmod-socket" : 666,
       		"vacuum" : true,
       		"disable-logging" : true,
-      		"max-worker-lifetime" : 30	
+      		"max-worker-lifetime" : 30
       	}
       },
       "programs" : {
@@ -148,6 +279,19 @@
       		"stderr_logfile" : "/var/log/supervisor/uwsgi.error.log",
       		"autostart": true,
       		"autorestart": true,
+      		"stopsignal": "QUIT"
+      	},
+        "celery": {
+      		"command" : "/var/mintyross.com/tubmanproject-api/.venv/bin/celery -A run_celery_worker.celery worker -l info --logfile=/var/log/celery/%%n-%%i.log --pidfile=/var/run/celery/%%n.pid",
+      		"directory" : "/var/mintyross.com/tubmanproject-api",
+      		"redirect_stderr" : true,
+      		"stdout_logfile" : "/var/log/supervisor/celery.log",
+      		"stderr_logfile" : "/var/log/supervisor/celery.error.log",
+      		"autostart": true,
+      		"autorestart": true,
+      		"startsecs" : 10,
+      		"stopwaitsecs" : 600,
+      		"killasgroup": true,
       		"stopsignal": "QUIT"
       	}
       }

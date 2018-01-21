@@ -1,4 +1,4 @@
-#!/bin/bash 
+#!/bin/bash
 
-find /var/<%= @jupyter_domain %>/<%= @jupyter_subdomain %>/jupyter/notebooks -maxdepth 1 -name '*.ipynb' -exec /var/<%= @jupyter_domain %>/<%= @jupyter_subdomain %>/.venv/bin/jupyter nbconvert {} --to html --template full \; 
-find /var/<%= @jupyter_domain %>/<%= @jupyter_subdomain %>/jupyter/notebooks -maxdepth 1 -name '*.html' -exec ln -s {} /var/<%= @domain %>/<%= @subdomain %>/app/templates/jupyter_notebooks/ \;
+find /var/lib/docker/volumes/jupyterhub-user-*/_data -maxdepth 1 -name '*.ipynb' -exec /var/<%= @jupyter_domain %>/<%= @jupyter_subdomain %>/.venv/bin/jupyter nbconvert {} --to html --template full \;
+find /var/lib/docker/volumes/jupyterhub-user-*/_data -maxdepth 1 -name '*.html' -exec ln -s {} /var/<%= @domain %>/<%= @subdomain %>/app/templates/jupyter_notebooks/ \;

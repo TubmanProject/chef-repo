@@ -34,6 +34,7 @@ template "#{::Dir.home(node['ssh']['user'])}/.ssh/config" do
   mode 0600
   source "ssh-config.erb"
   variables({
-    :identity_file => "#{::Dir.home(node['ssh']['user'])}/.ssh/#{github_secrets['private_key_filename']}"
+    :identity_file => "#{::Dir.home(node['ssh']['user'])}/.ssh/#{github_secrets['private_key_filename']}",
+    :user => node['ssh']['user']
   })
 end
