@@ -71,7 +71,7 @@ Usage of a Chef Server will also require the following pieces of information:
 * `encrypted_data_bag_secret` - A secret used to encrypt data bags.
 * `knife` - A command-line tool that provides an interface between a local chef-repo and the Chef server.
 
-Reference the [Setting up a Chef Server](https://github.com/tubmanproject/chef-repo/chef-repo) section for further instructions.
+Reference the [Setting up a Chef Server](https://github.com/TubmanProject/chef-repo/tree/master/chef-repo#setting-up-a-chef-server) section for further instructions.
 
 #### AWS EC2 Instance
 
@@ -151,7 +151,7 @@ Wrapper cookbooks extend the functionality of community cookbooks, downloaded fr
 ### Data Bags
 
 Data bags are used to hold configuration information that is used to provision and deploy virtual machines.
-Configuration of data bags is explained in the **Configuration** section below.
+Configuration of data bags is explained in the [**Configuration**](https://github.com/TubmanProject/chef-repo/tree/master/chef-repo#configuration) section below.
 
 ## Configuration
 
@@ -163,8 +163,8 @@ Configuration is achieved through data bags. The instructions below should be fo
 
 The **deploy** data bag contains configuration details necessary for deploying and configuring applications.  The deploy data bag contains non-sensitive information that is okay for saving in version control.  Deploy contains the following data bag items:
 
-* app
-* jupyterhub
+* [app](https://github.com/TubmanProject/chef-repo/tree/master/chef-repo#app)
+* [jupyterhub](https://github.com/TubmanProject/chef-repo/tree/master/chef-repo#jupyterhub)
 
 ##### app
 
@@ -358,17 +358,17 @@ The **secrets** data bag contains sensitive configuration details necessary for 
 
 Secrets contains the following data bag items:
 
-* aws
-* data_bag
-* github
-* host_machine
-* jupyterhub_users
-* mongodb
-* oauth
-* openssl
-* rabbitmq
-* redis
-* ssh_keys
+* [aws](https://github.com/TubmanProject/chef-repo/tree/master/chef-repo#jupyterhub)
+* [data_bag](https://github.com/TubmanProject/chef-repo/tree/master/chef-repo#data_bag)
+* [github](https://github.com/TubmanProject/chef-repo/tree/master/chef-repo#github)
+* [host_machine](https://github.com/TubmanProject/chef-repo/tree/master/chef-repo#host_machine)
+* [jupyterhub_users](https://github.com/TubmanProject/chef-repo/tree/master/chef-repo#jupyterhub_users)
+* [mongodb](https://github.com/TubmanProject/chef-repo/tree/master/chef-repo#mongodb)
+* [oauth](https://github.com/TubmanProject/chef-repo/tree/master/chef-repo#oauth)
+* [openssl](https://github.com/TubmanProject/chef-repo/tree/master/chef-repo#openssl)
+* [rabbitmq](https://github.com/TubmanProject/chef-repo/tree/master/chef-repo#rabbitmq)
+* [redis](https://github.com/TubmanProject/chef-repo/tree/master/chef-repo#redis)
+* [ssh_keys](https://github.com/TubmanProject/chef-repo/tree/master/chef-repo#ssh_keys)
 
 ##### aws
 
@@ -955,9 +955,9 @@ Create a JSON file `data_bags/secrets/ssh_keys.json` in the format above and com
 
 The **users** data bag contains information necessary for creating system users and groups.  The users data bag contains non-sensitive information that is okay for saving in version control.  Users contains the following data bag items:
 
-* supervisor
-* ubuntu
-* vagrant
+* [supervisor](https://github.com/TubmanProject/chef-repo/tree/master/chef-repo#supervisor)
+* [ubuntu](https://github.com/TubmanProject/chef-repo/tree/master/chef-repo#ubuntu)
+* [vagrant](https://github.com/TubmanProject/chef-repo/tree/master/chef-repo#vagrant)
 
 Additional users and groups can be created as needed by creating additional data bag items.  See the Chef [users cookbook](https://github.com/chef-cookbooks/users) for instructions on creating additional users and groups.
 

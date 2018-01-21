@@ -110,15 +110,15 @@ As described in the **Getting Started** section of this readme this project requ
 
 2. Set up configuration details for the deployed applications and provisioned instances by editing files in the `chef-repo/` directory.
 
-  Reference the [Configuration](https://github.com/tubmanproject/chef-repo/chef-repo#configuration) section of `chef-repo/readme.md` for configuration instructions.
+  Reference the [Configuration](https://github.com/TubmanProject/chef-repo/tree/master/chef-repo#configuration) section of `chef-repo/readme.md` for configuration instructions.
 
 3. Provision a local virtual machine or remote server using the configuration details established in step 2.
 
-  Reference the [Usage](https://github.com/tubmanproject/chef-repo/#usage) section below.  
+  Reference the [Usage](https://github.com/TubmanProject/chef-repo#usage) section below.  
 
 ## Usage
 
-There are two option to get this project up and running [Local Development](https://github.com/tubmanproject/chef-repo/#local_development) using Vagrant and using a [Remote Server](https://github.com/tubmanproject/chef-repo/#remote_server).
+There are two option to get this project up and running [Local Development](https://github.com/TubmanProject/chef-repo#local-development-1) using Vagrant and using a [Remote Server](https://github.com/TubmanProject/chef-repo#remote-server).
 
 ### Local Development
 
@@ -229,7 +229,7 @@ You can use a [managed](https://manage.chef.io/login) Chef Server or a [self-hos
   * Upload Chef environments to the Chef Server
   * Upload Chef roles to the Chef Server
 
-    Reference the [Setting up a Chef Server](https://github.com/tubmanproject/chef-repo/chef-repo) section of `chef-repo/readme.md` for further instructions.
+    Reference the [Setting up a Chef Server](https://github.com/TubmanProject/chef-repo/tree/master/chef-repo#setting-up-a-chef-server) section of `chef-repo/readme.md` for further instructions.
 
 6. Configure the node in the chef-repo
 
@@ -269,12 +269,12 @@ You can use a [managed](https://manage.chef.io/login) Chef Server or a [self-hos
 
 3. Upload your chef configuration to the Chef Server.
 
-  * Upload Chef cookbooks to the Chef Server
-  * Upload Chef data bags to the Chef Server
-  * Upload Chef environments to the Chef Server
-  * Upload Chef roles to the Chef Server
+  * [Upload Chef cookbooks to the Chef Server](https://github.com/TubmanProject/chef-repo/tree/master/chef-repo#uploading-chef-cookbooks)
+  * [Upload Chef data bags to the Chef Server](https://github.com/TubmanProject/chef-repo/tree/master/chef-repo#uploading-chef-data-bags)
+  * [Upload Chef environments to the Chef Server](https://github.com/TubmanProject/chef-repo/tree/master/chef-repo#uploading-environments)
+  * [Upload Chef roles to the Chef Server](https://github.com/TubmanProject/chef-repo/tree/master/chef-repo#uploading-roles)
 
-    Reference the [Setting up a Chef Server](https://github.com/tubmanproject/chef-repo/chef-repo) section of `chef-repo/readme.md` for further instructions.
+    Reference the [Setting up a Chef Server](https://github.com/TubmanProject/chef-repo/tree/master/chef-repo#setting-up-a-chef-server) section of `chef-repo/readme.md` for further instructions.
 
 4. Provision your EC2 instance using chef-client
 
