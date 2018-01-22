@@ -3,7 +3,7 @@
 	url = https://github.com/TubmanProject/jupyterhub.git
 [submodule "api"]
 	path = api
-	url = https://github.com/TubmanProject/data_scraper.git
+	url = https://github.com/TubmanProject/tubmanproject_api.git
 [submodule "rabbitmq-healthcheck"]
 	path = rabbitmq-healthcheck
 	url = git@github.com:tyronemsaunders/mintyross-rabbitmq.git
